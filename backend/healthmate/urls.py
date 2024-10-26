@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/', include('activity.urls')),
     path('api/', include('food.urls')),
     path('api/', include('sleep.urls')),
+    path('api/', include('analytics.urls')),
 
     # YASG
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),
