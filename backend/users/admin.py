@@ -1,11 +1,18 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
-from .models import UserProfile
-
-
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'weight', 'height', 'activity_level')
-    search_fields = ('user__username', 'user__email')
+from .models import CustomUser
 
 
-admin.site.register(UserProfile, UserProfileAdmin)
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
+    # Укажите поля, которые хотите отображать в админке
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {'fields': ('avatar', 'weight', 'height', 'gender')}),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        (None, {'fields': ('avatar', 'weight', 'height', 'gender')}),
+    )
+
+
+admin.site.register(CustomUser, CustomUserAdmin)

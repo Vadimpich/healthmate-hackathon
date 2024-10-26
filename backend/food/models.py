@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class MealLog(models.Model):
@@ -19,6 +21,7 @@ class MealLog(models.Model):
 
 
 class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
     meal = models.ForeignKey(MealLog, on_delete=models.CASCADE, related_name='products')
     name = models.CharField(max_length=100)
     calories = models.PositiveIntegerField(help_text="Калорийность продукта")
