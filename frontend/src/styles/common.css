@@ -1,0 +1,58 @@
+:root {
+    --textColor: #718355;
+    --buttonColor: #CCE3DE;
+    --footerColor: #6B9080;
+    --cardColor: #EAF4F4;
+}
+
+html, body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--textColor);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.min-vh-100 {
+    min-height: 100vh; /* Минимальная высота на весь экран */
+}
+.img-width {
+    max-width: 500px;
+    height: auto;
+}
+
+#root {
+    flex: 1;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    min-height: 100%;
+    padding: 0 2%;
+}
+
+.footer {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6,p {
+    color: var(--textColor)
+}
+
+p {
+    font-weight: normal;
+    font-size: 24px;
+}
+h1 {
+    font-weight: bold;
+}
+
+text {
+    color: var(--textColor);
+    font-weight: bold;
+    font-size: 40px;
+}

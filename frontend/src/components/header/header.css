@@ -1,0 +1,10 @@
+.custom-button.success {
+    background: var(--buttonColor);
+    font-weight: bolder;
+    font-size: 24px;
+    color: var(--textColor);
+}
+
+.header {
+    background: var(--cardColor);
+}

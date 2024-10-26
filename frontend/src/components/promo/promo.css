@@ -1,0 +1,7 @@
+.back {
+    background-color: var(--cardColor);
+    border-radius: 30px;
+    max-width: 1400px;
+
+    margin-top: 25px;
+}
