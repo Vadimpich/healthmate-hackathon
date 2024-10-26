@@ -17,10 +17,10 @@ class SleepLog(models.Model):
     sleep_start_time = models.TimeField(help_text="Время начала сна")
 
     SLEEP_QUALITY_CHOICES = [
-        ('excellent', 'Отлично'),
-        ('good', 'Хорошо'),
-        ('average', 'Средне'),
-        ('poor', 'Плохо'),
+        (10, 'Отлично'),
+        (7, 'Хорошо'),
+        (4, 'Средне'),
+        (1, 'Плохо'),
     ]
     sleep_quality = models.CharField(max_length=10,
                                      choices=SLEEP_QUALITY_CHOICES)

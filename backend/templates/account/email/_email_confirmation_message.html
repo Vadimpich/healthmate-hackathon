@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение почты</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333333; margin: 0; padding: 0; background-color: #f4f4f4;">
+    <table width="100%" bgcolor="#f4f4f4" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="20" cellspacing="0" border="0" bgcolor="#ffffff" style="border-radius: 8px; margin-top: 20px;">
+                    <tr>
+                        <td align="center" style="padding: 20px;">
+                            <h2 style="color: #333333;">Подтверждение адреса электронной почты</h2>
+                            <p style="color: #555555; font-size: 16px;">
+                                Здравствуйте! Спасибо за регистрацию. Пожалуйста, подтвердите ваш адрес электронной почты, нажав на кнопку ниже.
+                            </p>
+                            <a href="{{ activate_url }}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #4CAF50; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 5px;">
+                                Подтвердить почту
+                            </a>
+                            <p style="color: #888888; font-size: 14px; margin-top: 20px;">
+                                Если кнопка не работает, скопируйте и вставьте ссылку в ваш браузер:<br>
+                                <a href="{{ activate_url }}" style="color: #4CAF50; word-wrap: break-word;">{{ activate_url }}</a>
+                            </p>
+                            <p style="color: #999999; font-size: 12px; margin-top: 20px;">
+                                Если вы не регистрировались, просто игнорируйте это сообщение.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding: 10px; font-size: 12px; color: #aaaaaa;">
+                            © 2024 HealthMate.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

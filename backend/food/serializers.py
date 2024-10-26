@@ -13,5 +13,5 @@ class MealLogSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'user', 'meal', 'name', 'calories')
+        fields = ('id', 'user', 'name', 'calories')
         read_only_fields = ('user',)
