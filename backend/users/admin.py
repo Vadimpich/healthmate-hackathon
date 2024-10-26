@@ -8,10 +8,10 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     # Укажите поля, которые хотите отображать в админке
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('avatar', 'weight', 'height', 'gender')}),
+        (None, {'fields': ('weight', 'height', 'gender')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('avatar', 'weight', 'height', 'gender')}),
+        (None, {'fields': ('weight', 'height', 'gender')}),
     )
 
 

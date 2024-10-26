@@ -3,8 +3,6 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True,
-                               verbose_name='Аватар')
     weight = models.FloatField(null=True, blank=True, verbose_name='Вес')
     height = models.FloatField(null=True, blank=True, verbose_name='Рост')
     GENDER_CHOICES = (
