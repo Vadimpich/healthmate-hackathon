@@ -18,16 +18,19 @@ def analyze_health_view(request):
         return Response({'error': 'Необходима авторизация.'}, status=401)
 
     sleep = SleepLog.objects.filter(user=user).last()
-    steps = StepsLog.objects.filter(user=user).last()
 
-    activity_data = analyze_activity(
+    data = [
         user.gender,
         user.age,
         user.weight,
+        user.height,
         sleep.sleep_duration,
-        sleep.sleep_quality,
-        steps.steps
-    )
+        int(sleep.sleep_quality),
+    ]
+    print(data)
+    activity_data = analyze_activity(
+        *data
+    ) + 3000
     food_data = None
     sleep_data = None
 
