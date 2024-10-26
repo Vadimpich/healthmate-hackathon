@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'food.apps.FoodConfig',
     'sleep.apps.SleepConfig',
     'analytics.apps.AnalyticsConfig',
+    'utils.apps.UtilsConfig',
     'rest_framework',
     'rest_framework_simplejwt',
     'django.contrib.sites',
