@@ -6,7 +6,7 @@ from activity.views import (
 
 urlpatterns = [
     path('activity/', StepsLogListView.as_view(), name='steps-log-list'),
-    path('activity/', StepsLogCreateView.as_view(), name='steps-log-create'),
-    path('activity/<int:pk>/', StepsLogUpdateView.as_view(),
+    path('activity/create/', StepsLogCreateView.as_view(), name='steps-log-create'),
+    path('activity/<int:pk>/edit', StepsLogUpdateView.as_view(),
          name='steps-log-update'),
 ]

@@ -4,15 +4,13 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    # Укажите поля, которые хотите отображать в админке
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('weight', 'height', 'gender')}),
+        (None, {'fields': ('age', 'weight', 'height', 'gender')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('weight', 'height', 'gender')}),
+        (None, {'fields': ('age', 'weight', 'height', 'gender')}),
     )
 
-
-admin.site.register(CustomUser, CustomUserAdmin)
