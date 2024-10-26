@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'drf_yasg'
 ]
 
 # Настройки Django Allauth

@@ -5,7 +5,7 @@ from .models import MealLog, Product
 
 class ProductInline(admin.TabularInline):
     model = Product
-    extra = 1  # Количество пустых форм для добавления продуктов
+    extra = 1
 
 
 class MealLogAdmin(admin.ModelAdmin):
