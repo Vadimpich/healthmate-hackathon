@@ -22,8 +22,5 @@ class MealLog(models.Model):
         help_text="Общее количество калорий"
     )
 
-    class Meta:
-        unique_together = (('user', 'date'),)
-
     def __str__(self):
         return f"{self.get_meal_type_display()} пользователя {self.user.username} на {self.date}"
