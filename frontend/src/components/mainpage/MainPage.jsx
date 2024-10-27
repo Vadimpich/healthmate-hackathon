@@ -308,48 +308,51 @@ function MainPage() {
     if (isLoggedIn) {
         return (
             <>
-                <Link to='/activity' style={{textDecoration: 'none'}}>
-                    <motion.div
-                        whileHover={{scale: 1.05}}
-                    >
-                        <Container className="back p-5">
-                            <Row className="gap-0">
-                                <Col md={4} className="d-flex flex-column justify-content-center">
+
+                <motion.div
+                    whileHover={{scale: 1.05}}
+                >
+                    <Container className="back p-5">
+                        <Row className="gap-0">
+
+                            <Col md={4} className="d-flex flex-column justify-content-center">
+                                <Link to='/activity' style={{textDecoration: 'none'}}>
                                     <h3 className="mb-5 ">Активность и шаги</h3>
                                     <img src={sportImg} className="w-50" alt="Sport Image"/>
-                                </Col>
-                                <Col md={4} className="d-flex flex-column justify-content-center">
-                                    <h2>Ваша ИИ рекомендация:</h2>
-                                    <p className="mb-4">
-                                        {aiData.activity !== null
-                                            ? `Сегодня нужно сделать ${aiData.activity} шагов!`
-                                            : 'Введите данные о сне для анализа.'}
-                                    </p>
-                                    <div className="p-2">
-                                        <Button variant="success" className='custom-button'
-                                                onClick={() => setShowStepsForm(true)}>
-                                            Ввести данные
-                                        </Button>
-                                    </div>
-                                </Col>
-                                <Col md={4} className="d-flex flex-column justify-content-center">
-                                    {stepsChartData.labels.length !== 0 ? (
-                                        <>
-                                            <Bar data={stepsChartData} options={options}/>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="d-flex mt-2 justify-content-center">
-                                                <h3>Нет данных</h3>
-                                            </div>
-                                        </>
-                                    )
-                                    }
-                                </Col>
-                            </Row>
-                        </Container>
-                    </motion.div>
-                </Link>
+                                </Link>
+                            </Col>
+                            <Col md={4} className="d-flex flex-column justify-content-center">
+                                <h2>Ваша ИИ рекомендация:</h2>
+                                <p className="mb-4">
+                                    {aiData.activity !== null
+                                        ? `Сегодня нужно сделать ${aiData.activity} шагов!`
+                                        : 'Введите данные о сне для анализа.'}
+                                </p>
+                                <div className="p-2">
+                                    <Button variant="success" className='custom-button'
+                                            onClick={() => setShowStepsForm(true)}>
+                                        Ввести данные
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col md={4} className="d-flex flex-column justify-content-center">
+                                {stepsChartData.labels.length !== 0 ? (
+                                    <>
+                                        <Bar data={stepsChartData} options={options}/>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="d-flex mt-2 justify-content-center">
+                                            <h3>Нет данных</h3>
+                                        </div>
+                                    </>
+                                )
+                                }
+                            </Col>
+                        </Row>
+                    </Container>
+                </motion.div>
+
                 <AnimatePresence>
                     {showStepsForm && (
                         <>
@@ -411,39 +414,41 @@ function MainPage() {
                     )}
                 </AnimatePresence>
 
-                <Link to='/sleep' style={{textDecoration: 'none'}}>
-                    <motion.div
-                        whileHover={{scale: 1.05}}
-                    >
-                        <Container className="back p-5 mb-4">
-                            <Row className="gap-0">
-                                <Col md={4} className="d-flex flex-column justify-content-center">
+
+                <motion.div
+                    whileHover={{scale: 1.05}}
+                >
+                    <Container className="back p-5 mb-4">
+                        <Row className="gap-0">
+                            <Col md={4} className="d-flex flex-column justify-content-center">
+                                <Link to='/sleep' style={{textDecoration: 'none'}}>
                                     <h3 className="mb-5 ">Сон</h3>
                                     <img src={clockImag} className="w-50" alt="Sport Image"/>
-                                </Col>
-                                <Col md={4} className='d-flex flex-column justify-content-center'>
-                                    <h2>
-                                        Ваша ИИ рекомендация:
-                                    </h2>
-                                    <p className="mb-4">
-                                        {aiData.sleep !== null
-                                            ? `Сегодня нужно поспать ${aiData.sleep} часов!`
-                                            : 'Введите данные о сне для анализа.'}
-                                    </p>
-                                    <div className="p-2">
-                                        <Button variant="success" className='custom-button'
-                                                onClick={() => setShowSleepForm(true)}>
-                                            Ввести данные
-                                        </Button>
-                                    </div>
-                                </Col>
-                                <Col md={4} className="d-flex flex-column justify-content-center">
-                                    <Bar data={sleepChartData} options={options}/>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </motion.div>
-                </Link>
+                                </Link>
+                            </Col>
+                            <Col md={4} className='d-flex flex-column justify-content-center'>
+                                <h2>
+                                    Ваша ИИ рекомендация:
+                                </h2>
+                                <p className="mb-4">
+                                    {aiData.sleep !== null
+                                        ? `Сегодня нужно поспать ${aiData.sleep} часов!`
+                                        : 'Введите данные о сне для анализа.'}
+                                </p>
+                                <div className="p-2">
+                                    <Button variant="success" className='custom-button'
+                                            onClick={() => setShowSleepForm(true)}>
+                                        Ввести данные
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col md={4} className="d-flex flex-column justify-content-center">
+                                <Bar data={sleepChartData} options={options}/>
+                            </Col>
+                        </Row>
+                    </Container>
+                </motion.div>
+
                 <AnimatePresence>
                     {showSleepForm && (
                         <>
@@ -625,7 +630,8 @@ function MainPage() {
                 </AnimatePresence>
 
             </>
-        );
+        )
+            ;
     } else {
         return (
             <Container className="d-flex mt-5 justify-content-center">
