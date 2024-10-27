@@ -8,3 +8,11 @@
 .header {
     background: var(--cardColor);
 }
+
+.sticky-header {
+    position: sticky; !important;
+    top: 0; /* отступ от верха */
+    z-index: 1000; /* убедитесь, что он будет отображаться поверх других элементов */
+    background-color: var(--cardColor); /* фоновый цвет */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* добавьте тень для эффекта */
+}
