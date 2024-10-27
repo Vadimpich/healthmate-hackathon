@@ -7,6 +7,7 @@ import Footer from "./components/footer/Footer.jsx";
 import MainPage from "./components/mainpage/MainPage.jsx";
 import Profile from "./components/profile/Profile.jsx";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Activity from "./components/activity/Activity.jsx";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <div className="d-flex flex-column min-vh-100">
                 <Header/>
                 <Routes>
+                    <Route path="/activity" element={<Activity/>}/>
                     <Route path="/" element={<Promo/>}/>
                     <Route path="/main-page" element={<MainPage/>}/>
                     <Route path="/profile" element={<Profile/>}/>
