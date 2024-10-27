@@ -1,6 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from jwt.utils import force_bytes
 from rest_framework import serializers
 
 User = get_user_model()
