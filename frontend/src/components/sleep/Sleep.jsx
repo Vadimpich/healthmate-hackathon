@@ -130,7 +130,7 @@ function Sleep() {
                 labels: last7Days,
                 datasets: [
                     {
-                        label: 'Шаги',
+                        label: 'Сон (ч.)',
                         data: sleepData,
                         fill: false,
                         backgroundColor: '#6B9080',
