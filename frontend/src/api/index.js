@@ -86,14 +86,12 @@ const api = {
 
     // Функции для работы с профилем, продуктами, приемами пищи, активностью и т. д.
     async getUserProfile() {
-        const response = await axiosInstance.get('/profile/');
-        return response.data;
+        return await axiosInstance.get('/profile/');
     },
 
     // Функция для обновления профиля пользователя
     async updateUserProfile(profileData) {
-        const response = await axiosInstance.put('/profile/', profileData);
-        return response.data;
+        return await axiosInstance.put('/profile/', profileData);
     },
 
     // Функция для получения списка продуктов
