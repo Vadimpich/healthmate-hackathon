@@ -157,8 +157,7 @@ const api = {
 
     // Функция для получения списка сна
     async getSleepLogs() {
-        const response = await axiosInstance.get('/sleep/');
-        return response;
+        return await axiosInstance.get('/sleep/');
     },
 
     // Функция для создания записи о сне
@@ -169,8 +168,7 @@ const api = {
 
     // Функция для обновления записи о сне
     async updateSleepLog(id, sleepData) {
-        const response = await axiosInstance.put(`/sleep/${id}/edit/`, sleepData);
-        return response.data;
+        return await axiosInstance.put(`/sleep/${id}/edit/`, sleepData);
     },
 
     async createFeedback(feedbackData) {

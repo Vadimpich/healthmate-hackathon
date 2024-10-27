@@ -8,6 +8,7 @@ import MainPage from "./components/mainpage/MainPage.jsx";
 import Profile from "./components/profile/Profile.jsx";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Activity from "./components/activity/Activity.jsx";
+import Sleep from "./components/sleep/Sleep.jsx";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <div className="d-flex flex-column min-vh-100">
                 <Header/>
                 <Routes>
+                    <Route path="/sleep" element={<Sleep/>}/>
                     <Route path="/activity" element={<Activity/>}/>
                     <Route path="/" element={<Promo/>}/>
                     <Route path="/main-page" element={<MainPage/>}/>
