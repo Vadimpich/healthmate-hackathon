@@ -18,7 +18,7 @@ function App() {
             <div className="d-flex flex-column min-vh-100">
                 <Header/>
                 <Routes>
-                    <Route path="/calories" element={<Calories/>}/>
+                    <Route path="/food" element={<Calories/>}/>
                     <Route path="/sleep" element={<Sleep/>}/>
                     <Route path="/activity" element={<Activity/>}/>
                     <Route path="/" element={<Promo/>}/>

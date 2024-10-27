@@ -79,6 +79,7 @@ function Calories() {
     const [error, setError] = useState('');
     const [editingMealLogId, setEditingMealLogId] = useState(null);
     const [foodChartData, setFoodChartData] = useState({labels: [], datasets: []});
+    const [lineData, setLineData] = useState({ labels: [], datasets: [] });
     const foodChoises = {
         breakfast: 'Завтрак',
         lunch: 'Обед',
@@ -132,6 +133,19 @@ function Calories() {
                     },
                 ]
             });
+            setLineData({
+                labels: last7Days,
+                datasets: [
+                    {
+                        label: 'Ккал',
+                        data: foodData,
+                        fill: false,
+                        backgroundColor: '#6B9080',
+                        borderColor: '#6B9080',
+                        tension: 0.3
+                    },
+                ],
+            });
         } catch (err) {
             console.error('Ошибка при получении данных:', err);
         }
@@ -160,7 +174,7 @@ function Calories() {
                             <Bar data={foodChartData} options={options}/>
                         </div>
                         <div className='w-50'>
-                            <Line options={optionsLine} data={foodChartData}/>
+                            <Line options={optionsLine} data={lineData}/>
                         </div>
                     </Row>
 
