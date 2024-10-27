@@ -73,6 +73,7 @@ const options = {
 function Activity() {
     const [showForm, setShowForm] = useState(false);
     const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+    const [lineData, setLineData] = useState({ labels: [], datasets: [] });
     const [activity, setActivity] = useState([]);
     const [steps, setSteps] = useState('');
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
@@ -115,6 +116,20 @@ function Activity() {
                         data: stepsData,
                         backgroundColor: '#6B9080',
                         borderWidth: 0,
+                    },
+                ],
+            });
+
+            setLineData({
+                labels: last7Days,
+                datasets: [
+                    {
+                        label: 'Шаги',
+                        data: stepsData,
+                        fill: false,
+                        backgroundColor: '#6B9080',
+                        borderColor: '#6B9080',
+                        tension: 0.3
                     },
                 ],
             });
@@ -180,7 +195,7 @@ function Activity() {
                         </div>
 
                         <div className='w-50'>
-                            <Line options={optionsLine} data={chartData} />
+                            <Line options={optionsLine} data={lineData} />
                         </div>
                     </Row>
 
