@@ -12,6 +12,9 @@ footer {
     margin-right: 20px; /* Устанавливаем отступ справа */
 }
 
+.no-bullets{
+    list-style-type: none;
+}
 
 .name:last-child {
     margin-right: 0;
