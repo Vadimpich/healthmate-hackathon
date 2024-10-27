@@ -10,15 +10,12 @@ load_dotenv()
 class LinearRegression:
     def init(self):
         self.weights = None
-        self.bias = None
 
     def fit(self, X, y):
-        X = np.c_[np.ones(X.shape[0]), X]
         X_T_X_inv = np.linalg.pinv(X.T @ X)
         self.weights = X_T_X_inv @ X.T @ y
 
     def predict(self, X):
-        X = np.c_[np.ones(X.shape[0]), X]
         return X @ self.weights
 
 
@@ -52,7 +49,9 @@ def replace_none_with_zero(rows):
 def replace_weight(rows):
     return [
         tuple(tuple(
-            1 if value == 'Normal' or value == 'Normal Weight' else 2 if value == 'Overweight' else 3 if value == 'Obese' else value
+            1 if value == 'Normal' or value == 'Normal Weight'
+            else 2 if value == 'Overweight'
+            else 3 if value == 'Obese' else value
             for value in row
         ))
         for row in rows

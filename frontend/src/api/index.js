@@ -40,9 +40,16 @@ axiosInstance.interceptors.response.use(
     }
 );
 
+// Настройка заголовков по умолчанию
+const token = localStorage.getItem('accessToken');
+if (token) {
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 const api = {
     // Функция для регистрации пользователя
     async registerUser(userData) {
+        console.log(userData);
         const response = await axiosInstance.post('/register/', userData);
         return response.data;
     },
@@ -52,14 +59,20 @@ const api = {
         const response = await axiosInstance.post('/login/', credentials);
         localStorage.setItem('accessToken', response.data.access);
         localStorage.setItem('refreshToken', response.data.refresh);
+
+        // Обновляем заголовок Authorization
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+
         return response.data;
     },
 
     // Функция для выхода пользователя
-    async logoutUser() {
-        const response = await axiosInstance.post('/logout/');
+    async logoutUser(data) {
+        const response = await axiosInstance.post('/logout/', data);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        // Удаляем заголовок Authorization
+        delete axiosInstance.defaults.headers.common['Authorization'];
         return response.data;
     },
 
@@ -71,7 +84,7 @@ const api = {
         return response.data; // Вернёт новый access token
     },
 
-    // Функция для получения профиля пользователя
+    // Функции для работы с профилем, продуктами, приемами пищи, активностью и т. д.
     async getUserProfile() {
         const response = await axiosInstance.get('/profile/');
         return response.data;
@@ -124,7 +137,7 @@ const api = {
     // Функция для получения списка активности
     async getActivities() {
         const response = await axiosInstance.get('/activity/');
-        return response.data;
+        return response;
     },
 
     // Функция для создания новой активности
@@ -141,8 +154,7 @@ const api = {
 
     // Функция для получения статистики
     async getAnalytics() {
-        const response = await axiosInstance.get('/analytics/');
-        return response.data;
+        return await axiosInstance.get('/analytics/');
     },
 
     // Функция для получения списка сна

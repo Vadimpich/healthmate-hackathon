@@ -4,7 +4,17 @@
     --footerColor: #6B9080;
     --cardColor: #EAF4F4;
 }
-
+.custom-button{
+    background: var(--buttonColor);
+    font-weight: normal;
+    font-size: 18px;
+    color: var(--textColor);
+    border-radius: 23px;
+    border: none;
+}
+.custom-button.promo{
+    font-size: 24px;
+}
 html, body {
     font-family: 'Montserrat', sans-serif;
     color: var(--textColor);

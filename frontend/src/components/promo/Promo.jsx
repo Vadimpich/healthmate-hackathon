@@ -1,10 +1,12 @@
 import {Container, Row, Col} from 'react-bootstrap';
 import DoctorImg from './../../assets/Врач.svg';
 import SportImag from './../../assets/Спорт.png'
+import FoodImg from '../../assets/Еда.png'
 import './promo.css'
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 import ClockImg from '../../assets/ClockPromo.svg'
+
 function Promo() {
     return (
         <>
@@ -20,8 +22,8 @@ function Promo() {
                                 следить за важными показателями здоровья!
                             </p>
                         </div>
-                        <div className='d-flex justify-content-center'>
-                            <Button as={Link} to='/registration' variant="success">Регистрация</Button>
+                        <div className='d-flex justify-content-center mb-4'>
+                            <Button as={Link} to='/registration' variant="success" className="custom-button promo">Присоединиться</Button>
                         </div>
                     </Col>
                     <Col md={7} className="d-flex justify-content-center">
@@ -69,6 +71,7 @@ function Promo() {
                                 Получайте ценные рекомендации по улучшению качества сна на основе ежедневного анализа.
                             </p>
                         </div>
+
                     </Col>
                     <Col md={7} className="d-flex justify-content-center">
                         <img
@@ -76,6 +79,27 @@ function Promo() {
                             alt="Пример"
                             className="img-fluid w-75" // Класс для адаптивного изображения
                         />
+                    </Col>
+
+                </Row>
+            </Container>
+            <Container className="back mb-4">
+                <Row className="g-0 align-items-center">
+                    <Col md={7} className="d-flex justify-content-center">
+                        <img
+                            src={FoodImg} // Замените URL на свой
+                            alt="Пример"
+                            className="img-fluid" // Класс для адаптивного изображения
+                        />
+                    </Col>
+                    <Col md={5} className="d-flex flex-column justify-content-center">
+                        <div className="p-2">
+                            <h2 className="mb-4 fw-bold">Питание и калории</h2>
+                            <p className="mb-4">
+                                Не забывайте пить воду и следить за питанием с нашими напоминаниями и удобным дневником.
+                            </p>
+                        </div>
+
                     </Col>
 
                 </Row>
