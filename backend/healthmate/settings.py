@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'utils.apps.UtilsConfig',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 
 # Настройки Django Allauth
 SITE_ID = 1
+FRONTEND_URL = os.getenv('FRONTEND_URL')
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
@@ -74,6 +76,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'

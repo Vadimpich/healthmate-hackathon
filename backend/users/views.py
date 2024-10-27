@@ -3,11 +3,12 @@ from allauth.account.utils import send_email_confirmation
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, \
+from .serializers import (
+    UserRegistrationSerializer, UserLoginSerializer,
     UserProfileSerializer
+)
 
 User = get_user_model()
 
@@ -33,7 +34,6 @@ class UserLoginView(generics.GenericAPIView):
         username_or_email = request.data.get('username')
         password = request.data.get('password')
 
-
         user = User.objects.filter(username=username_or_email).first()
         if not user:
             user = User.objects.filter(email=username_or_email).first()
@@ -55,22 +55,27 @@ class UserLoginView(generics.GenericAPIView):
 
 
 class UserLogoutView(generics.GenericAPIView):
-    serializer_class = UserLoginSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        token = request.data.get('refresh')
-        if token is None:
+        # Получаем refresh-токен из тела запроса
+        refresh_token = request.data.get('refresh')
+        if refresh_token is None:
             return Response({"detail": "Токен обновления не предоставлен."},
-                            status=400)
+                            status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            token_obj = OutstandingToken.objects.get(token=token)
-            token_obj.blacklist()
+            # Блокируем токен, добавляя его в черный список
+            token = RefreshToken(refresh_token)
+            token.blacklist()
             return Response({"detail": "Вы успешно вышли из системы."},
-                            status=205)
-        except OutstandingToken.DoesNotExist:
-            return Response({"detail": "Токен не найден."}, status=404)
+                            status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response({
+                "detail": "Невозможно выйти из системы. "
+                          "Токен недействителен или отсутствует."
+            },
+                status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
