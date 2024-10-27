@@ -70,6 +70,14 @@ const options = {
     },
 };
 
+const feelings = [
+    'Плохо',
+    'Так себе',
+    'Нормально',
+    'Хорошо',
+    'Отлично',
+]
+
 function Activity() {
     const [showForm, setShowForm] = useState(false);
     const [chartData, setChartData] = useState({ labels: [], datasets: [] });
@@ -79,6 +87,7 @@ function Activity() {
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [error, setError] = useState('');
     const [editingActivityId, setEditingActivityId] = useState(null); // ID редактируемой активности
+    const [feeling, setFeeling] = useState(5);
 
     const fetchActivityData = async () => {
         try {
@@ -146,6 +155,7 @@ function Activity() {
                 // Если мы редактируем существующую активность
                 await api.updateActivity(editingActivityId, {
                     steps: parseInt(steps),
+                    feeling: feeling,
                     date
                 }, {
                     headers: {
@@ -181,6 +191,7 @@ function Activity() {
         setSteps(activity.steps); // Устанавливаем шаги для редактирования
         setDate(activity.date); // Устанавливаем дату для редактирования
         setEditingActivityId(activity.id); // Устанавливаем ID активности для редактирования
+        setFeeling(activity.feeling)
         setShowForm(true); // Открываем форму
     };
 
@@ -205,16 +216,18 @@ function Activity() {
                             <tr>
                                 <th>Дата</th>
                                 <th>Количество шагов</th>
+                                <th>Самочувствие</th>
                             </tr>
                             </thead>
                             <tbody>
                             {activity.map((act) => (
                                 <tr key={act.id}>
                                     <td>{act.date}</td>
+                                    <td>{act.steps}</td>
                                     <td className={'d-flex justify-content-between'}>
-                                        {act.steps}
+                                        {feelings[act.feeling-1]}
                                         <Button variant={'link'} onClick={() => handleEditClick(act)}>
-                                            <img src={EditImg} alt={"Edit"} />
+                                            <img src={EditImg} alt={"Edit"}/>
                                         </Button>
                                     </td>
                                 </tr>
@@ -253,6 +266,20 @@ function Activity() {
                                         placeholder="Введите количество шагов"
                                         required
                                     />
+                                </Form.Group>
+                                <Form.Group controlId="formFeeling">
+                                <Form.Label>Ваше самочувствие</Form.Label>
+                                <Form.Control
+                                    type="range"
+                                    min="1"
+                                    max="5"
+                                    value={feeling}
+                                    onChange={(e) => setFeeling(Number(e.target.value))}
+                                    className="mb-3 mt-3 range"
+                                />
+                                <div className="d-flex justify-content-center">
+                                    <p>{feelings[feeling - 1]}</p>
+                                </div>
                                 </Form.Group>
                                 <Form.Group controlId="formDate" className="mt-2">
                                     <Form.Label>Дата</Form.Label>
