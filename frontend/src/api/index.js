@@ -170,6 +170,11 @@ const api = {
     async updateSleepLog(id, sleepData) {
         return await axiosInstance.put(`/sleep/${id}/edit/`, sleepData);
     },
+
+    async createFeedback(feedbackData) {
+        const response = await axiosInstance.post('feedback/', feedbackData);
+        return response.data;
+    },
 };
 
 export default api;

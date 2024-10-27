@@ -1,22 +1,30 @@
+from django.utils import timezone
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from activity.ai import analyze_activity
 from analytics.models import Feedback
+from analytics.serializers import FeedbackSerializer
 from sleep.models import SleepLog
 
 
 class FeedbackListCreateView(generics.ListCreateAPIView):
     queryset = Feedback.objects.all()
-    serializer_class = Feedback
+    serializer_class = FeedbackSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+
+        feedback, created = Feedback.objects.update_or_create(
+            user=user,
+            defaults=serializer.validated_data
+        )
+
 
 
 @api_view(['GET'])

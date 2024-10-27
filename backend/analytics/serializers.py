@@ -5,5 +5,5 @@ from .models import Feedback
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
-        fields = ['id', 'user', 'date', 'feeling_level']
-        read_only_fields = ['id', 'user', 'date']
+        fields = ['id', 'user', 'feeling_level']
+        read_only_fields = ['id', 'user']
