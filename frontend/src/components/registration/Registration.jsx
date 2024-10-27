@@ -47,7 +47,7 @@ function Registration() {
     };
 
     return (
-        <Container className="back">
+        <Container className="back p-4">
             <Row className="g-0 align-items-center">
                 <Col md={5} className="d-flex flex-column justify-content-center">
                     <Form onSubmit={handleSubmit}>

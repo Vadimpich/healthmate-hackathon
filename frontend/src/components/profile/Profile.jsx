@@ -4,8 +4,10 @@ import { Col, Container, Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import SportImg from '../../assets/СпортДляМейн.png';
 import api from "../../api/index.js";
+import {useNavigate} from "react-router-dom";
 
 function Profile() {
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState(0);
@@ -58,6 +60,7 @@ function Profile() {
                 }
             });
             alert("Данные успешно сохранены");
+            navigate('/main-page')
         } catch (err) {
             console.error('Ошибка при обновлении данных:', err);
         }

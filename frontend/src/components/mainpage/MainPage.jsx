@@ -9,6 +9,7 @@ import api from '../../api'; // Импортируйте ваш API
 import sportImg from '../../assets/СпортДляМейн.png';
 import clockImag from '../../assets/clock.png';
 import foodImg from '../../assets/food.svg';
+import {useNavigate} from "react-router-dom";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -47,6 +48,7 @@ const feelings = [
 ]
 
 function MainPage() {
+    const navigate = useNavigate();
     const [showStepsForm, setShowStepsForm] = useState(false);
     const [showFoodForm, setShowFoodForm] = useState(false);
     const [showSleepForm, setShowSleepForm] = useState(false);
@@ -171,7 +173,7 @@ function MainPage() {
         if (productName && productCalories) {
             setSelectedProducts((prev) => [
                 ...prev,
-                { name: productName, calories: Number(productCalories) },
+                {name: productName, calories: Number(productCalories)},
             ]);
             // Сброс значений полей
             setProductName('');
@@ -294,7 +296,22 @@ function MainPage() {
         )
     }
 
+    const checkProfile = async () => {
+        const token = localStorage.getItem('accessToken');
+        const response = await api.getUserProfile({
+            headers: {
+                Authorization: `Bearer ${token}` // Добавьте токен в заголовок
+            }
+        });
+        const data = response.data;
+        console.log(data)
+        console.log(Object.values(data).every(value => value !== null && value !== '' && value !== 0))
+        if (!Object.values(data).every(value => value !== null && value !== '' && value !== 0)) {
+            navigate('/profile')
+        }
+    }
     const isLoggedIn = localStorage.getItem('accessToken') !== null;
+    checkProfile()
     if (isLoggedIn) {
         return (
             <>
@@ -312,7 +329,7 @@ function MainPage() {
                                     className="mb-3 mt-3 range"
                                 />
                                 <div className="d-flex justify-content-center">
-                                    <h5>{feelings[feeling-1]}</h5>
+                                    <h5>{feelings[feeling - 1]}</h5>
                                 </div>
                             </Form.Group>
                         </Col>
@@ -435,18 +452,18 @@ function MainPage() {
                         <>
                             <motion.div
                                 className="overlay"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 0.5 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3 }}
+                                initial={{opacity: 0}}
+                                animate={{opacity: 0.5}}
+                                exit={{opacity: 0}}
+                                transition={{duration: 0.3}}
                                 onClick={() => setShowFoodForm(false)}
                             />
                             <motion.div
                                 className="modal-form"
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.8 }}
-                                transition={{ duration: 0.3 }}
+                                initial={{opacity: 0, scale: 0.8}}
+                                animate={{opacity: 1, scale: 1}}
+                                exit={{opacity: 0, scale: 0.8}}
+                                transition={{duration: 0.3}}
                             >
                                 <Form className="p-4 bg-white rounded">
                                     <h5>Добавление продуктов</h5>
@@ -582,7 +599,8 @@ function MainPage() {
                                             onChange={(e) => setSleepQuality(e.target.value)}
                                             required
                                         >
-                                            <option value="">Выберите качество сна</option> {/* Пустой вариант для выбора */}
+                                            <option value="">Выберите качество сна</option>
+                                            {/* Пустой вариант для выбора */}
                                             <option value={10}>Отлично</option>
                                             <option value={7}>Хорошо</option>
                                             <option value={4}>Средне</option>

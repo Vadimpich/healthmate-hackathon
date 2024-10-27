@@ -1,5 +1,4 @@
 import Header from "./components/header/Header.jsx";
-// import Promo from "./components/promo/Promo.jsx";
 import Login from "./components/login/Login.jsx";
 import Registration from "./components/registration/Registration.jsx";
 import Promo from "./components/promo/Promo.jsx";
