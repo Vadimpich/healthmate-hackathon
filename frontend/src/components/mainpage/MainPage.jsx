@@ -518,8 +518,10 @@ function MainPage() {
                     <Container className="back p-5 mb-4">
                         <Row className="gap-0">
                             <Col md={4} className="d-flex flex-column justify-content-center">
-                                <h3 className="mb-5 ">Питание</h3>
-                                <img src={foodImg} className="w-50" alt="Sport Image"/>
+                                <Link to='/food' style={{textDecoration: 'none'}}>
+                                    <h3 className="mb-5 ">Питание</h3>
+                                    <img src={foodImg} className="w-50" alt="Sport Image"/>
+                                </Link>
                             </Col>
                             <Col md={4} className='d-flex flex-column justify-content-center'>
                                 <h2>
