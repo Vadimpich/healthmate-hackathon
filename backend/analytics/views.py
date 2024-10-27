@@ -38,7 +38,7 @@ def analyze_health_view(request):
 
     sleep = SleepLog.objects.filter(user=user).order_by('date').last()
     steps = StepsLog.objects.filter(user=user).order_by('date').last()
-    print(steps)
+    #print(steps)
 
     if not steps or not sleep:
         activity_data = 8000

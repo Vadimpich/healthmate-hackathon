@@ -19,6 +19,10 @@
     background-color: var(--footerColor); /* Цвет кнопки при наведении */
 }
 
+.logout-button:hover {
+    background-color: #cc5555; /* Цвет кнопки при наведении */
+}
+
 .img-custom:hover{
     color: white;
 }

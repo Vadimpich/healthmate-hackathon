@@ -418,7 +418,7 @@ function MainPage() {
                 <motion.div
                     whileHover={{scale: 1.05}}
                 >
-                    <Container className="back p-5 mb-4">
+                    <Container className="back p-5">
                         <Row className="gap-0">
                             <Col md={4} className="d-flex flex-column justify-content-center">
                                 <Link to='/sleep' style={{textDecoration: 'none'}}>

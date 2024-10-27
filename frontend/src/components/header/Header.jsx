@@ -75,7 +75,7 @@ function Header() {
                                     custom={3}
                                     variants={buttonAnimation}>
                                     <Button variant="danger" onClick={handleLogout}
-                                            className="custom-button d-flex align-items-center gap-1">
+                                            className="logout-button custom-button d-flex align-items-center gap-1">
                                         <img src={LogOutImg} alt={"logOutImg"} className={''}/>
                                         Выйти
                                     </Button>

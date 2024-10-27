@@ -51,7 +51,7 @@ def ins(durr, feedback):
     # connect()
     # args_str = ','.join(cur.mogrify("(%s,%s)", x) for x in val)
     cur.execute("INSERT INTO sleep VALUES (%s, %s)",[durr, feedback])
-    print("INSERT успешно")
+    #print("INSERT успешно")
     conn.commit()
     cur.close()
     conn.close()
@@ -88,7 +88,7 @@ def analyze_sleep(durr, feedback):
     y = np.array([row[0] for row in rows])
     a = get_a(x, y)
     b = get_b(x,y)
-    print("a,b", a,b)
+    #print("a,b", a,b)
     #plt.plot(x,y, "o", label="Данные для обучения")
     x_test = [0, 10]
     y_test = [b, 10 * a + b ]
@@ -111,7 +111,7 @@ def analyze_sleep(durr, feedback):
     #b -= learning_rate * deviation
     #[b, a] = coefficient_reg_inv(x, y)
 
-    print("new a, new b:", a,b)
+    #print("new a, new b:", a,b)
     # predict_again(b,a,durr)
 
 
