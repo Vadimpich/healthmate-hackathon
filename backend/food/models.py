@@ -22,33 +22,8 @@ class MealLog(models.Model):
         help_text="Общее количество калорий"
     )
 
+    class Meta:
+        unique_together = (('user', 'date'),)
+
     def __str__(self):
         return f"{self.get_meal_type_display()} пользователя {self.user.username} на {self.date}"
-
-
-class Product(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             related_name='products')
-    name = models.CharField(max_length=100)
-    calories = models.PositiveIntegerField(
-        help_text="Калорийность продукта",
-        validators=[validate_calories]
-    )
-
-    def __str__(self):
-        return f"{self.name} ({self.calories} ккал)"
-
-
-class MealProduct(models.Model):
-    meal = models.ForeignKey(MealLog, on_delete=models.CASCADE,
-                             related_name='meal_products')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE,
-                                related_name='meal_products')
-    quantity = models.PositiveIntegerField(default=1,
-                                           help_text="Количество продукта в приёме пищи")
-
-    class Meta:
-        unique_together = ('meal', 'product')
-
-    def __str__(self):
-        return f"{self.product.name} в {self.meal.get_meal_type_display()} на {self.meal.date}"

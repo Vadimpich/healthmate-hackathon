@@ -14,7 +14,6 @@ class SleepLog(models.Model):
         help_text="Продолжительность сна в часах",
         validators=[validate_sleep_hours]
     )
-    sleep_start_time = models.TimeField(help_text="Время начала сна")
 
     SLEEP_QUALITY_CHOICES = [
         (10, 'Отлично'),
@@ -24,6 +23,9 @@ class SleepLog(models.Model):
     ]
     sleep_quality = models.CharField(max_length=10,
                                      choices=SLEEP_QUALITY_CHOICES)
+
+    class Meta:
+        unique_together = (('user', 'date'),)
 
     def __str__(self):
         return f"Сон пользователя {self.user.username} за {self.date}: {self.sleep_quality}"

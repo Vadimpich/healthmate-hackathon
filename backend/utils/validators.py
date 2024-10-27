@@ -1,6 +1,5 @@
-from django.utils import timezone
-
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 
 def validate_age(value):
@@ -45,4 +44,11 @@ def validate_calories(value):
     if value < 0 or value > 5000:
         raise ValidationError(
             'Количество калорий должно быть в диапазоне от 0 до 5000.'
+        )
+
+
+def validate_feeling_level(value):
+    if value < 1 or value > 5:
+        raise ValidationError(
+            'Уровень самочувствия должен быть в диапазоне от 1 до 5'
         )

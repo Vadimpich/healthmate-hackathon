@@ -4,16 +4,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import logoImg from '../../assets/activity.svg';
 import './header.css';
 import {Link, useNavigate} from 'react-router-dom';
+import api from "../../api/index.js";
 
 function Header() {
     // Проверяем, есть ли токен доступа в localStorage
     const isLoggedIn = localStorage.getItem('accessToken') !== null;
     const navigate = useNavigate(); // Инициализируем navigate
 
-    const handleLogout = () => {
-        // Очищаем токены и другие данные
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+    const handleLogout = async () => {
+        //localStorage.removeItem('accessToken');
+        //localStorage.removeItem('refreshToken');
+        const data = {'refresh': localStorage.getItem('refreshToken')};
+        await api.logoutUser(data)
         // Перенаправляем пользователя на страницу входа или главную страницу
         navigate('/'); // Укажите нужный путь для перенаправления
     };

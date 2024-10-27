@@ -117,7 +117,7 @@ const api = {
     // Функция для получения списка приемов пищи
     async getMeals() {
         const response = await axiosInstance.get('/meals/');
-        return response.data;
+        return response;
     },
 
 
@@ -160,7 +160,7 @@ const api = {
     // Функция для получения списка сна
     async getSleepLogs() {
         const response = await axiosInstance.get('/sleep/');
-        return response.data;
+        return response;
     },
 
     // Функция для создания записи о сне
