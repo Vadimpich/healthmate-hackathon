@@ -202,7 +202,7 @@ function MainPage() {
             setAiData({
                 activity: data.activity,
                 food: '',
-                sleep: ''
+                sleep: data.sleep
             })
         } catch (err) {
             console.error('Ошибка при получении рекомендаций:', err);
@@ -546,7 +546,9 @@ function MainPage() {
                                 Ваша ИИ рекомендация:
                             </h2>
                             <p className="mb-4">
-                                Сегодня нужно спать 8 часов! Ложитесь пораньше
+                                {aiData.sleep !== null
+                                    ? `Сегодня нужно поспать ${aiData.sleep} часов!`
+                                    : 'Введите данные о сне для анализа.'}
                             </p>
                             <div className="p-2">
                                 <Button variant="success" className='custom-button'

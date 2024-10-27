@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from activity.ai import analyze_activity
+from sleep.ai import analyze_sleep
 from analytics.models import Feedback
 from analytics.serializers import FeedbackSerializer
 from sleep.models import SleepLog
@@ -38,6 +39,7 @@ def analyze_health_view(request):
 
     if not sleep:
         activity_data = None
+        sleep_data = None
     else:
         activity_data = analyze_activity(
             user.gender,
@@ -47,8 +49,11 @@ def analyze_health_view(request):
             sleep.sleep_duration,
             int(sleep.sleep_quality),
         ) + 3000
+        sleep_data = analyze_sleep(
+            sleep.sleep_duration,
+            int(sleep.sleep_quality),
+        )
     food_data = None
-    sleep_data = None
 
     response_data = {
         'activity': activity_data,
