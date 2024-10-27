@@ -172,6 +172,11 @@ const api = {
         const response = await axiosInstance.put(`/sleep/${id}/edit/`, sleepData);
         return response.data;
     },
+
+    async createFeedback(feedbackData) {
+        const response = await axiosInstance.post('feedback/', feedbackData);
+        return response.data;
+    },
 };
 
 export default api;
