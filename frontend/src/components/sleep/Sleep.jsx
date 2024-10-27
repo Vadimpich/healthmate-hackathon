@@ -79,6 +79,7 @@ function Sleep() {
     const [error, setError] = useState('');
     const [editingSleepLogId, setEditingSleepLogId] = useState(null);
     const [sleepChartData, setSleepChartData] = useState({labels: [], datasets: []});
+    const [lineData, setLineData] = useState({labels: [], datasets: []});
     const sleepQualityLabels = {
         10: "Отлично",
         7: "Хорошо",
@@ -123,6 +124,20 @@ function Sleep() {
                         borderWidth: 0,
                     },
                 ]
+            });
+
+            setLineData({
+                labels: last7Days,
+                datasets: [
+                    {
+                        label: 'Шаги',
+                        data: sleepData,
+                        fill: false,
+                        backgroundColor: '#6B9080',
+                        borderColor: '#6B9080',
+                        tension: 0.3
+                    },
+                ],
             });
         } catch (err) {
             console.error('Ошибка при получении данных:', err);
@@ -193,7 +208,7 @@ function Sleep() {
                             <Bar data={sleepChartData} options={options}/>
                         </div>
                         <div className='w-50'>
-                            <Line options={optionsLine} data={sleepChartData}/>
+                            <Line options={optionsLine} data={lineData}/>
                         </div>
                     </Row>
 
