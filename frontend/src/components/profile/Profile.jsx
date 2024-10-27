@@ -67,7 +67,7 @@ function Profile() {
     };
 
     return (
-        <Container className="back">
+        <Container className="back p-3">
             <Row className="p-2 align-items-center">
                 <Col md={5} className="d-flex flex-column justify-content-center">
                     <Form onSubmit={handleSubmit}>
@@ -125,7 +125,7 @@ function Profile() {
                                 />
                             </Form.Group>
                         </Row>
-                        <Button variant="success" type="submit">
+                        <Button variant="success" type="submit" className='custom-button'>
                             Сохранить
                         </Button>
                     </Form>

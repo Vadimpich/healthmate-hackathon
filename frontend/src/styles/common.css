@@ -19,6 +19,9 @@
     background-color: var(--footerColor); /* Цвет кнопки при наведении */
 }
 
+.img-custom:hover{
+    color: white;
+}
 html, body {
     font-family: 'Montserrat', sans-serif;
     color: var(--textColor);
@@ -40,7 +43,9 @@ html, body {
 #root {
     flex: 1;
 }
-
+.backkkk{
+    background-color: var(--footerColor); !important;
+}
 .container {
     max-width: 1600px;
     margin: 0 auto;

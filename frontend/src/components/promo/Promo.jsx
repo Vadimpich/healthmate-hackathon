@@ -194,16 +194,17 @@ export const boxAnimation = {
 };
 
 export const logoAnimation = {
-    hidden: (custom) => ({
+    hidden:  {
         opacity: 0,
-        y: custom * 20,
-    }),
-    visible: {
+
+    },
+    visible: (custom) => ({
         opacity: 1,
-        y: 0,
+
         transition: {
             duration: 0.8,
+            delay: custom * 0.2,
             ease: "easeInOut"
         }
-    }
+    })
 };

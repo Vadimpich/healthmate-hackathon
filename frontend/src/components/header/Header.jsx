@@ -26,12 +26,15 @@ function Header() {
         navigate('/'); // Укажите нужный путь для перенаправления
     };
     return (
+
         <motion.div
+
             initial="hidden"
             whileInView="visible"
             viewport={{amount: 0.2, once: true}}
         >
-            <Navbar expand="lg" className="bg-body-tertiary d-flex justify-content-between">
+
+            <Navbar expand="lg" className="d-flex justify-content-between sticky-header">
                 <Container fluid className="d-flex justify-content-between px-5">
 
                     <Navbar.Brand as={Link} to='/'>
@@ -74,7 +77,7 @@ function Header() {
                                     variants={buttonAnimation}>
                                     <Button variant="danger" onClick={handleLogout}
                                             className="custom-button d-flex align-items-center gap-1">
-                                        <img src={LogOutImg} alt={"logOutImg"}/>
+                                        <img src={LogOutImg} alt={"logOutImg"} className={''}/>
                                         Выйти
                                     </Button>
                                 </motion.div>
@@ -84,7 +87,6 @@ function Header() {
                         ) : (
                             <>
                                 <Button variant="success custom-button" as={Link} to='/login'>
-
                                     Войти
                                 </Button>
                                 <Button variant="success" className="custom-button" as={Link} to='/registration'>
@@ -104,11 +106,11 @@ export default Header;
 export const logoAnimation = {
     hidden: (custom) => ({
         opacity: 0,
-        y: custom * 20,
+
     }),
     visible: {
         opacity: 1,
-        y: 0,
+
         transition: {
             duration: 0.8,
             ease: "easeInOut"
