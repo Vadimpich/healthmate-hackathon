@@ -15,6 +15,9 @@
 .custom-button.promo{
     font-size: 24px;
 }
+.custom-button:hover {
+    background-color: var(--footerColor); /* Цвет кнопки при наведении */
+}
 
 html, body {
     font-family: 'Montserrat', sans-serif;
