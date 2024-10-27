@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import (UserRegistrationView, UserLogoutView, UserProfileView,
-    UserLoginView)
+                    UserLoginView)
 
 app_name = 'users'
 
