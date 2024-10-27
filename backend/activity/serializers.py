@@ -6,5 +6,5 @@ from .models import StepsLog
 class StepsLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = StepsLog
-        fields = ('id', 'user', 'date', 'steps')
+        fields = ('id', 'user', 'date', 'feeling', 'steps')
         read_only_fields = ('user',)

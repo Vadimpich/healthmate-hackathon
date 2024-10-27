@@ -65,7 +65,7 @@ function MainPage() {
     const [foodChartData, setFoodChartData] = useState({labels: [], datasets: []});
     const [sleepChartData, setSleepChartData] = useState({labels: [], datasets: []});
     const [aiData, setAiData] = useState({activity: '', food: '', sleep: ''});
-    const [feeling, setFeeling] = useState(3);
+    const [feeling, setFeeling] = useState(5);
 
     // Функция для получения данных активности
     const fetchChartsData = async () => {
@@ -224,6 +224,7 @@ function MainPage() {
             const token = localStorage.getItem('accessToken');
             await api.createActivity({
                 steps: parseInt(steps),
+                feeling: feeling,
                 date
             }, {
                 headers: {
@@ -232,6 +233,7 @@ function MainPage() {
             });
             setShowStepsForm(false); // Закрыть форму после отправки
             setSteps(''); // Очистить состояние шагов
+            setFeeling(5)
             setDate(new Date().toISOString().split('T')[0]); // Обновить дату на сегодня
             await fetchChartsData()
         } catch (err) {
@@ -287,15 +289,6 @@ function MainPage() {
         }
     };
 
-    const handleFeelingChange = async (feelingLevel) => {
-        setFeeling(feelingLevel)
-        await api.createFeedback(
-            {
-                feeling_level: feelingLevel
-            }
-        )
-    }
-
     const checkProfile = async () => {
         const token = localStorage.getItem('accessToken');
         const response = await api.getUserProfile({
@@ -315,26 +308,6 @@ function MainPage() {
     if (isLoggedIn) {
         return (
             <>
-                <Container className="p-3 d-flex justify-content-center">
-                    <Row>
-                        <Col>
-                            <Form.Group controlId="formFeeling">
-                                <h3>Оцените ваше самочувствие</h3>
-                                <Form.Control
-                                    type="range"
-                                    min="1"
-                                    max="5"
-                                    value={feeling}
-                                    onChange={(e) => handleFeelingChange(Number(e.target.value))}
-                                    className="mb-3 mt-3 range"
-                                />
-                                <div className="d-flex justify-content-center">
-                                    <h5>{feelings[feeling - 1]}</h5>
-                                </div>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                </Container>
                 <Container className="back p-5">
                     <Row className="gap-0">
                         <Col md={4} className="d-flex flex-column justify-content-center">
@@ -402,6 +375,18 @@ function MainPage() {
                                             placeholder="Введите количество шагов"
                                             required
                                         />
+                                        <Form.Label>Ваше самочувствие</Form.Label>
+                                        <Form.Control
+                                            type="range"
+                                            min="1"
+                                            max="5"
+                                            value={feeling}
+                                            onChange={(e) => setFeeling(Number(e.target.value))}
+                                            className="mb-3 mt-3 range"
+                                        />
+                                        <div className="d-flex justify-content-center">
+                                            <p>{feelings[feeling - 1]}</p>
+                                        </div>
                                     </Form.Group>
                                     <Form.Group controlId="formDate" className="mt-2">
                                         <Form.Label>Дата</Form.Label>

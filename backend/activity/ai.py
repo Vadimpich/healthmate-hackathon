@@ -1,8 +1,19 @@
-import time
-import psycopg2
+import os
+
 import numpy as np
+import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 def insert_correction_data(rate, steps):
-    conn = psycopg2.connect(database="Steps", user="postgres", password="235711", host="localhost", port="5432")
+    conn = psycopg2.connect(
+        database=os.getenv('DB_NAME'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        host=os.getenv('DB_HOST', 'localhost'),
+        port=os.getenv('DB_PORT', '5432'))
     cur = conn.cursor()
     cur.execute("""
         INSERT INTO user_rate (rate, steps)
@@ -11,11 +22,15 @@ def insert_correction_data(rate, steps):
     conn.commit()
     cur.close()
     conn.close()
+
+
 def adjust_weights_with_feedback(predicted_steps, actual_steps, user_feedback):
     if actual_steps < predicted_steps:
         insert_correction_data(user_feedback, predicted_steps)
     else:
         insert_correction_data(user_feedback, actual_steps - predicted_steps)
+
+
 def grad_plus_steps(X, y):
     learning_rate = 0.01
     iterations = 1000
@@ -32,6 +47,7 @@ def grad_plus_steps(X, y):
 
     return weights
 
+
 class LinearRegression:
     def init(self):
         self.weights = None
@@ -41,17 +57,24 @@ class LinearRegression:
         X = np.c_[np.ones(X.shape[0]), X]
         X_T_X_inv = np.linalg.pinv(X.T @ X)
         self.weights = X_T_X_inv @ X.T @ y
+
     def predict(self, X):
         X = np.c_[np.ones(X.shape[0]), X]
         return X @ self.weights
         return X @ self.weights
+
+
 def normalize_to_range(array):
     min_value = np.min(array)
     max_value = np.max(array)
     normalized_array = (array - min_value) / (max_value - min_value)
     return normalized_array
+
+
 def drop_column(rows):
-    return [row[:3]+row[4:6]+ row[8:9]+row[11:12] for row in rows]
+    return [row[:3] + row[4:6] + row[8:9] + row[11:12] for row in rows]
+
+
 def replace_gender(rows):
     return [
         (1 if row[1] == 'Male' else 2, *row[2:])
@@ -59,11 +82,15 @@ def replace_gender(rows):
         else row
         for row in rows
     ]
+
+
 def replace_none_with_zero(rows):
     return [
         tuple(0 if value is None else value for value in row)
         for row in rows
     ]
+
+
 def replace_weight(rows):
     return [
         tuple(tuple(
@@ -72,19 +99,32 @@ def replace_weight(rows):
         ))
         for row in rows
     ]
+
+
 def train_set(rows):
     return [row[:-1] for row in rows]
+
+
 def work_set(rows):
     return [row[-1] for row in rows]
+
+
 def bmi_category(bmi):
     if (bmi <= 18):
         return 1
-    elif(19<bmi<=40):
+    elif (19 < bmi <= 40):
         return 2
     else:
         return 3
+
+
 def grad_process(user_rate):
-    conn = psycopg2.connect(database="Steps", user="postgres", password="235711", host="localhost", port="5432")
+    conn = psycopg2.connect(
+        database=os.getenv('DB_NAME'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        host=os.getenv('DB_HOST', 'localhost'),
+        port=os.getenv('DB_PORT', '5432'))
     cur = conn.cursor()
     cur.execute("SELECT * FROM user_rate;")
     rows = cur.fetchall()
@@ -96,16 +136,24 @@ def grad_process(user_rate):
     y = y_set
     weights = grad_plus_steps(X, y)
     return user_rate * weights[0]
-def get_data(gender, age, actual_steps, rate, sleep_duration=8, quality_of_sleep=5, weight=50, height=180):
-    bmi = bmi_category(weight/(height))
-    x=np.array([[int(gender), int(age), float(sleep_duration), int(quality_of_sleep), bmi]])
+
+
+def analyze_activity(gender, age, weight, height, sleep_duration,
+                     quality_of_sleep, actual_steps, rate):
+    bmi = bmi_category(weight / (height))
+    x = np.array([[int(gender), int(age), float(sleep_duration),
+                   int(quality_of_sleep), bmi]])
     rows = processing()
-    daily_steps = predicts(rows, x)+grad_process(10)
-    if(rate< 5):
+    daily_steps = predicts(rows, x) + grad_process(10)
+    if (rate < 5):
         adjust_weights_with_feedback(daily_steps, actual_steps, rate)
-    return daily_steps
+    return daily_steps.astype(int).item()
+
+
 def update_set_pr():
     processing()
+
+
 def predicts(rows, x):
     x_set = np.array(train_set(rows))
     y_set = np.array(work_set(rows))
@@ -113,8 +161,15 @@ def predicts(rows, x):
     model.fit(x_set, y_set)
     out = model.predict(x)
     return out
+
+
 def processing():
-    conn = psycopg2.connect(database="Steps", user="postgres", password="235711", host="localhost", port="5432")
+    conn = psycopg2.connect(
+        database=os.getenv('DB_NAME'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        host=os.getenv('DB_HOST', 'localhost'),
+        port=os.getenv('DB_PORT', '5432'))
     cur = conn.cursor()
     cur.execute("SELECT * FROM health_data;")
     rows = cur.fetchall()

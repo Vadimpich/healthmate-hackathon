@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from activity.ai import analyze_activity
+from activity.models import StepsLog
 from sleep.ai import analyze_sleep
 from analytics.models import Feedback
 from analytics.serializers import FeedbackSerializer
@@ -35,10 +36,13 @@ def analyze_health_view(request):
     if not user.is_authenticated:
         return Response({'error': 'Необходима авторизация.'}, status=401)
 
-    sleep = SleepLog.objects.filter(user=user).last()
+    sleep = SleepLog.objects.filter(user=user).order_by('date').last()
+    steps = StepsLog.objects.filter(user=user).order_by('date').last()
+    print(steps)
 
+    if not steps or not sleep:
+        activity_data = 8000
     if not sleep:
-        activity_data = None
         sleep_data = None
     else:
         activity_data = analyze_activity(
@@ -48,7 +52,9 @@ def analyze_health_view(request):
             user.height,
             sleep.sleep_duration,
             int(sleep.sleep_quality),
-        ) + 3000
+            steps.steps,
+            steps.feeling * 2
+        )
         sleep_data = analyze_sleep(
             sleep.sleep_duration,
             int(sleep.sleep_quality),
