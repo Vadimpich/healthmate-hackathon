@@ -9,7 +9,7 @@ import api from '../../api'; // Импортируйте ваш API
 import sportImg from '../../assets/СпортДляМейн.png';
 import clockImag from '../../assets/clock.png';
 import foodImg from '../../assets/food.svg';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -308,43 +308,48 @@ function MainPage() {
     if (isLoggedIn) {
         return (
             <>
-                <Container className="back p-5">
-                    <Row className="gap-0">
-                        <Col md={4} className="d-flex flex-column justify-content-center">
-                            <h3 className="mb-5 ">Активность и шаги</h3>
-                            <img src={sportImg} className="w-50" alt="Sport Image"/>
-                        </Col>
-                        <Col md={4} className="d-flex flex-column justify-content-center">
-                            <h2>Ваша ИИ рекомендация:</h2>
-                            <p className="mb-4">
-                                {aiData.activity !== null
-                                    ? `Сегодня нужно сделать ${aiData.activity} шагов!`
-                                    : 'Введите данные о сне для анализа.'}
-                            </p>
-                            <div className="p-2">
-                                <Button variant="success" className='custom-button'
-                                        onClick={() => setShowStepsForm(true)}>
-                                    Ввести данные
-                                </Button>
-                            </div>
-                        </Col>
-                        <Col md={4} className="d-flex flex-column justify-content-center">
-                            {stepsChartData.labels.length !== 0 ? (
-                                <>
-                                    <Bar data={stepsChartData} options={options}/>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="d-flex mt-2 justify-content-center">
-                                        <h3>Нет данных</h3>
+                <Link to='/activity' style={{textDecoration: 'none'}}>
+                    <motion.div
+                        whileHover={{scale: 1.05}}
+                    >
+                        <Container className="back p-5">
+                            <Row className="gap-0">
+                                <Col md={4} className="d-flex flex-column justify-content-center">
+                                    <h3 className="mb-5 ">Активность и шаги</h3>
+                                    <img src={sportImg} className="w-50" alt="Sport Image"/>
+                                </Col>
+                                <Col md={4} className="d-flex flex-column justify-content-center">
+                                    <h2>Ваша ИИ рекомендация:</h2>
+                                    <p className="mb-4">
+                                        {aiData.activity !== null
+                                            ? `Сегодня нужно сделать ${aiData.activity} шагов!`
+                                            : 'Введите данные о сне для анализа.'}
+                                    </p>
+                                    <div className="p-2">
+                                        <Button variant="success" className='custom-button'
+                                                onClick={() => setShowStepsForm(true)}>
+                                            Ввести данные
+                                        </Button>
                                     </div>
-                                </>
-                            )
-                            }
-                        </Col>
-                    </Row>
-                </Container>
-
+                                </Col>
+                                <Col md={4} className="d-flex flex-column justify-content-center">
+                                    {stepsChartData.labels.length !== 0 ? (
+                                        <>
+                                            <Bar data={stepsChartData} options={options}/>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="d-flex mt-2 justify-content-center">
+                                                <h3>Нет данных</h3>
+                                            </div>
+                                        </>
+                                    )
+                                    }
+                                </Col>
+                            </Row>
+                        </Container>
+                    </motion.div>
+                </Link>
                 <AnimatePresence>
                     {showStepsForm && (
                         <>
@@ -406,32 +411,131 @@ function MainPage() {
                     )}
                 </AnimatePresence>
 
-                <Container className="back p-5">
-                    <Row className="gap-0">
-                        <Col md={4} className="d-flex flex-column justify-content-center">
-                            <h3 className="mb-5 ">Питание</h3>
-                            <img src={foodImg} className="w-50" alt="Sport Image"/>
-                        </Col>
-                        <Col md={4} className='d-flex flex-column justify-content-center'>
-                            <h2>
-                                Ваша ИИ рекомендация:
-                            </h2>
-                            <p className="mb-4">
-                                Сегодня нужно съесть 2200 Ккал! Не забудьте про обед!
-                            </p>
-                            <div className="p-2">
-                                <Button variant="success" className='custom-button'
-                                        onClick={() => setShowFoodForm(true)}>
-                                    Ввести данные
-                                </Button>
-                            </div>
-                        </Col>
-                        <Col md={4} className="d-flex flex-column justify-content-center">
-                            <Bar data={foodChartData} options={options}/>
-                        </Col>
-                    </Row>
-                </Container>
-
+                <Link to='/sleep' style={{textDecoration: 'none'}}>
+                    <motion.div
+                        whileHover={{scale: 1.05}}
+                    >
+                        <Container className="back p-5 mb-4">
+                            <Row className="gap-0">
+                                <Col md={4} className="d-flex flex-column justify-content-center">
+                                    <h3 className="mb-5 ">Сон</h3>
+                                    <img src={clockImag} className="w-50" alt="Sport Image"/>
+                                </Col>
+                                <Col md={4} className='d-flex flex-column justify-content-center'>
+                                    <h2>
+                                        Ваша ИИ рекомендация:
+                                    </h2>
+                                    <p className="mb-4">
+                                        {aiData.sleep !== null
+                                            ? `Сегодня нужно поспать ${aiData.sleep} часов!`
+                                            : 'Введите данные о сне для анализа.'}
+                                    </p>
+                                    <div className="p-2">
+                                        <Button variant="success" className='custom-button'
+                                                onClick={() => setShowSleepForm(true)}>
+                                            Ввести данные
+                                        </Button>
+                                    </div>
+                                </Col>
+                                <Col md={4} className="d-flex flex-column justify-content-center">
+                                    <Bar data={sleepChartData} options={options}/>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </motion.div>
+                </Link>
+                <AnimatePresence>
+                    {showSleepForm && (
+                        <>
+                            <motion.div
+                                className="overlay"
+                                initial={{opacity: 0}}
+                                animate={{opacity: 0.5}}
+                                exit={{opacity: 0}}
+                                transition={{duration: 0.3}}
+                                onClick={() => setShowSleepForm(false)}
+                            />
+                            <motion.div
+                                className="modal-form"
+                                initial={{opacity: 0, scale: 0.8}}
+                                animate={{opacity: 1, scale: 1}}
+                                exit={{opacity: 0, scale: 0.8}}
+                                transition={{duration: 0.3}}
+                            >
+                                <Form onSubmit={handleSleepFormSubmit} className="p-4 bg-white rounded">
+                                    {error &&
+                                        <p className="text-danger">{error}</p>} {/* Показываем ошибку, если есть */}
+                                    <Form.Group controlId="formSleep">
+                                        <Form.Label>Длительность сна</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            value={sleepDuration}
+                                            onChange={(e) => setSleepDuration(e.target.value)}
+                                            placeholder="Введите длительность сна (ч.)"
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="formSleepQuality">
+                                        <Form.Label>Качество сна</Form.Label>
+                                        <Form.Select
+                                            value={sleepQuality}
+                                            onChange={(e) => setSleepQuality(e.target.value)}
+                                            required
+                                        >
+                                            <option value="">Выберите качество сна</option>
+                                            {/* Пустой вариант для выбора */}
+                                            <option value={10}>Отлично</option>
+                                            <option value={7}>Хорошо</option>
+                                            <option value={4}>Средне</option>
+                                            <option value={1}>Плохо</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group controlId="formDate" className="mt-2">
+                                        <Form.Label>Дата</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            value={date}
+                                            onChange={(e) => setDate(e.target.value)}
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Button variant="success" type="submit" className="mt-3 custom-button">
+                                        Сохранить данные
+                                    </Button>
+                                </Form>
+                            </motion.div>
+                        </>
+                    )}
+                </AnimatePresence>
+                <motion.div
+                    whileHover={{scale: 1.05}}
+                >
+                    <Container className="back p-5 mb-4">
+                        <Row className="gap-0">
+                            <Col md={4} className="d-flex flex-column justify-content-center">
+                                <h3 className="mb-5 ">Питание</h3>
+                                <img src={foodImg} className="w-50" alt="Sport Image"/>
+                            </Col>
+                            <Col md={4} className='d-flex flex-column justify-content-center'>
+                                <h2>
+                                    Ваша ИИ рекомендация:
+                                </h2>
+                                <p className="mb-4">
+                                    Сегодня нужно съесть 2200 Ккал! Не забудьте про обед!
+                                </p>
+                                <div className="p-2">
+                                    <Button variant="success" className='custom-button'
+                                            onClick={() => setShowFoodForm(true)}>
+                                        Ввести данные
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col md={4} className="d-flex flex-column justify-content-center">
+                                <Bar data={foodChartData} options={options}/>
+                            </Col>
+                        </Row>
+                    </Container>
+                </motion.div>
                 <AnimatePresence>
                     {showFoodForm && (
                         <>
@@ -520,97 +624,6 @@ function MainPage() {
                     )}
                 </AnimatePresence>
 
-                <Container className="back p-5 mb-4">
-                    <Row className="gap-0">
-                        <Col md={4} className="d-flex flex-column justify-content-center">
-                            <h3 className="mb-5 ">Сон</h3>
-                            <img src={clockImag} className="w-50" alt="Sport Image"/>
-                        </Col>
-                        <Col md={4} className='d-flex flex-column justify-content-center'>
-                            <h2>
-                                Ваша ИИ рекомендация:
-                            </h2>
-                            <p className="mb-4">
-                                {aiData.sleep !== null
-                                    ? `Сегодня нужно поспать ${aiData.sleep} часов!`
-                                    : 'Введите данные о сне для анализа.'}
-                            </p>
-                            <div className="p-2">
-                                <Button variant="success" className='custom-button'
-                                        onClick={() => setShowSleepForm(true)}>
-                                    Ввести данные
-                                </Button>
-                            </div>
-                        </Col>
-                        <Col md={4} className="d-flex flex-column justify-content-center">
-                            <Bar data={sleepChartData} options={options}/>
-                        </Col>
-                    </Row>
-                </Container>
-
-                <AnimatePresence>
-                    {showSleepForm && (
-                        <>
-                            <motion.div
-                                className="overlay"
-                                initial={{opacity: 0}}
-                                animate={{opacity: 0.5}}
-                                exit={{opacity: 0}}
-                                transition={{duration: 0.3}}
-                                onClick={() => setShowSleepForm(false)}
-                            />
-                            <motion.div
-                                className="modal-form"
-                                initial={{opacity: 0, scale: 0.8}}
-                                animate={{opacity: 1, scale: 1}}
-                                exit={{opacity: 0, scale: 0.8}}
-                                transition={{duration: 0.3}}
-                            >
-                                <Form onSubmit={handleSleepFormSubmit} className="p-4 bg-white rounded">
-                                    {error &&
-                                        <p className="text-danger">{error}</p>} {/* Показываем ошибку, если есть */}
-                                    <Form.Group controlId="formSleep">
-                                        <Form.Label>Длительность сна</Form.Label>
-                                        <Form.Control
-                                            type="number"
-                                            value={sleepDuration}
-                                            onChange={(e) => setSleepDuration(e.target.value)}
-                                            placeholder="Введите длительность сна (ч.)"
-                                            required
-                                        />
-                                    </Form.Group>
-                                    <Form.Group controlId="formSleepQuality">
-                                        <Form.Label>Качество сна</Form.Label>
-                                        <Form.Select
-                                            value={sleepQuality}
-                                            onChange={(e) => setSleepQuality(e.target.value)}
-                                            required
-                                        >
-                                            <option value="">Выберите качество сна</option>
-                                            {/* Пустой вариант для выбора */}
-                                            <option value={10}>Отлично</option>
-                                            <option value={7}>Хорошо</option>
-                                            <option value={4}>Средне</option>
-                                            <option value={1}>Плохо</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <Form.Group controlId="formDate" className="mt-2">
-                                        <Form.Label>Дата</Form.Label>
-                                        <Form.Control
-                                            type="date"
-                                            value={date}
-                                            onChange={(e) => setDate(e.target.value)}
-                                            required
-                                        />
-                                    </Form.Group>
-                                    <Button variant="success" type="submit" className="mt-3 custom-button">
-                                        Сохранить данные
-                                    </Button>
-                                </Form>
-                            </motion.div>
-                        </>
-                    )}
-                </AnimatePresence>
             </>
         );
     } else {

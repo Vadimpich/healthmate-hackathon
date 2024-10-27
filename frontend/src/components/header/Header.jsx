@@ -28,7 +28,6 @@ function Header() {
     return (
 
         <motion.div
-
             initial="hidden"
             whileInView="visible"
             viewport={{amount: 0.2, once: true}}
