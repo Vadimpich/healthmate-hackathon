@@ -1,5 +1,6 @@
+from allauth.account.models import EmailAddress
 from allauth.account.utils import send_email_confirmation
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
@@ -29,16 +30,25 @@ class UserLoginView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
+        username_or_email = request.data.get('username')
         password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
 
-        if user is not None:
+
+        user = User.objects.filter(username=username_or_email).first()
+        if not user:
+            user = User.objects.filter(email=username_or_email).first()
+
+        if user is not None and user.check_password(password):
+            if not EmailAddress.objects.filter(user=user,
+                                               verified=True).exists():
+                return Response(
+                    {'detail': 'Пожалуйста, подтвердите свою почту.'},
+                    status=status.HTTP_403_FORBIDDEN)
             refresh = RefreshToken.for_user(user)
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-            })
+            }, status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'Неправильный логин или пароль.'},
                             status=status.HTTP_401_UNAUTHORIZED)
@@ -74,7 +84,8 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     def patch(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(instance, data=request.data,
+                                         partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)

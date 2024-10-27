@@ -40,8 +40,8 @@ function Login() {
                         <Form.Group className="mb-3" controlId="formGridUsername">
                             <Form.Label>Логин</Form.Label>
                             <Form.Control
-                                type="usernmae"
-                                placeholder="Введите ваш логин"
+                                type="username"
+                                placeholder="Введите ваш логин или почту"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)} // Обновляем состояние
                             />
