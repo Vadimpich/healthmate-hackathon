@@ -36,18 +36,22 @@ INSTALLED_APPS = [
     'utils.apps.UtilsConfig',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'drf_yasg'
+    'drf_yasg',
+    'corsheaders',
 ]
 
 # Настройки Django Allauth
 SITE_ID = 1
+FRONTEND_URL = os.getenv('FRONTEND_URL')
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_REQUIRED = True
 
 # Настройки для отправки почты
@@ -72,10 +76,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,7 +89,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'allauth.account.middleware.AccountMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
 ]
 
 ROOT_URLCONF = 'healthmate.urls'

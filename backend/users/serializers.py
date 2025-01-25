@@ -18,10 +18,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.Serializer):
-    class Meta:
-        model = User
-        fields = ('email', 'password')
-        extra_kwargs = {'password': {'write_only': True}}
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(write_only=True)
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
